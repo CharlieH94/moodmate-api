@@ -57,6 +57,7 @@ module.exports = (err, req, res, next) => {
     senErrorDev(err, res);
   } else if (process.env.NODE_ENV === "production") {
     let error = { ...err };
+    error.errmsg = err.errmsg;
 
     if (err instanceof mongoose.Error.CastError) {
       error = handleCastErrorDB(error);
