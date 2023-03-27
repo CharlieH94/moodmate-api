@@ -14,7 +14,9 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     results: users.length,
-    users,
+    data: {
+      users,
+    },
   });
 });
 
@@ -23,7 +25,9 @@ exports.getUserById = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    user,
+    data: {
+      user,
+    },
   });
 });
 
@@ -34,7 +38,9 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    user,
+    data: {
+      user,
+    },
   });
 });
 
