@@ -1,74 +1,48 @@
 const User = require("./../models/userModel");
 const APIFeatures = require("./../utils/apiFeatures");
+const catchAsync = require("./../utils/catchAsync");
 
-exports.getAllUsers = async (req, res, next) => {
-  try {
-    const features = new APIFeatures(User.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    const users = await features.query;
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+  const features = new APIFeatures(User.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
 
-    res.status(200).json({
-      status: "success",
-      results: users.length,
-      users,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+  const users = await features.query;
 
-exports.getUserById = async (req, res, next) => {
-  try {
-    const user = await User.findById(req.params.userId);
+  res.status(200).json({
+    status: "success",
+    results: users.length,
+    users,
+  });
+});
 
-    res.status(200).json({
-      status: "success",
-      user,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+exports.getUserById = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.params.userId);
 
-exports.updateUser = async (req, res, next) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.userId, req.body, {
-      new: true,
-    });
+  res.status(200).json({
+    status: "success",
+    user,
+  });
+});
 
-    res.status(200).json({
-      status: "success",
-      user,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+exports.updateUser = catchAsync(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(req.params.userId, req.body, {
+    new: true,
+  });
 
-exports.deleteUser = async (req, res, next) => {
-  try {
-    await User.findByIdAndDelete(req.params.userId);
+  res.status(200).json({
+    status: "success",
+    user,
+  });
+});
 
-    res.status(200).json({
-      status: "success",
-      message: "User deleted",
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  await User.findByIdAndDelete(req.params.userId);
+
+  res.status(200).json({
+    status: "success",
+    message: "User deleted",
+  });
+});
