@@ -1,3 +1,4 @@
+const AppError = require("../utils/appError");
 const User = require("./../models/userModel");
 const APIFeatures = require("./../utils/apiFeatures");
 const catchAsync = require("./../utils/catchAsync");
@@ -23,6 +24,10 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 exports.getUserById = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.params.userId);
 
+  if (!user) {
+    return next(new AppError("No user with that ID", 404));
+  }
+
   res.status(200).json({
     status: "success",
     data: {
@@ -36,6 +41,10 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     new: true,
   });
 
+  if (!user) {
+    return next(new AppError("No user with that ID", 404));
+  }
+
   res.status(200).json({
     status: "success",
     data: {
@@ -45,10 +54,14 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
-  await User.findByIdAndDelete(req.params.userId);
+  const user = await User.findByIdAndDelete(req.params.userId);
+
+  if (!user) {
+    return next(new AppError("No user with that ID", 404));
+  }
 
   res.status(200).json({
     status: "success",
-    message: "User deleted",
+    data: null,
   });
 });
