@@ -6,6 +6,13 @@ const handleCastErrorDB = (err) => {
   return new AppError(message, 400);
 };
 
+const handleDuplicateFieldsDB = (err) => {
+  const duplicateField = Object.keys(err.keyValue)[0];
+
+  const message = `Duplicate field value: ${duplicateField}. Please use another value!`;
+  return new AppError(message, 400);
+};
+
 const senErrorDev = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -47,6 +54,7 @@ module.exports = (err, req, res, next) => {
     if (err instanceof mongoose.Error.CastError) {
       error = handleCastErrorDB(error);
     }
+    if (error.code === 11000) error = handleDuplicateFieldsDB(error);
 
     sendErrorProd(error, res);
   }
