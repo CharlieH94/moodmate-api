@@ -18,11 +18,13 @@ const userSchema = new mongoose.Schema({
     required: [true, "You must enter an email"],
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email"],
+    unique: true,
   },
   password: {
     type: String,
     required: [true, "Please provide a password"],
     minlength: 8,
+    select: false,
   },
   passwordConfirm: {
     type: String,
@@ -41,7 +43,6 @@ const userSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now(),
-    select: false,
   },
 });
 
@@ -54,6 +55,13 @@ userSchema.pre("save", async function (next) {
   this.passwordConfirm = undefined;
   next();
 });
+
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 const User = mongoose.model("User", userSchema);
 
