@@ -8,6 +8,5 @@ const router = express.Router();
 router.route("/").get(authController.protect, quotesController.getAllQuotes);
 
 router.post("/addQuote", authController.protect, quotesController.addQuote);
-// router.get("/quotes")
 
 module.exports = router;
