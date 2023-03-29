@@ -63,26 +63,11 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
-// exports.getUserById = catchAsync(async (req, res, next) => {
-//   const user = await User.findById(req.params.userId);
-
-//   if (!user) {
-//     return next(new AppError("No user with that ID", 404));
-//   }
-
-//   res.status(200).json({
-//     status: "success",
-//     data: {
-//       user,
-//     },
-//   });
-// });
-
-exports.getUserByEmail = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.params.email);
+exports.getUserById = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.params.userId);
 
   if (!user) {
-    return next(new AppError("No user with that email", 404));
+    return next(new AppError("No user with that ID", 404));
   }
 
   res.status(200).json({
