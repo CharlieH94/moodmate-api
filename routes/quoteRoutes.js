@@ -7,6 +7,11 @@ const router = express.Router();
 
 router.route("/").get(authController.protect, quotesController.getAllQuotes);
 
+router
+  .route("/:quoteId")
+  .patch(authController.protect, quotesController.updateQuote)
+  .delete(authController.protect, quotesController.deleteQuote);
+
 router.post("/addQuote", authController.protect, quotesController.addQuote);
 
 module.exports = router;

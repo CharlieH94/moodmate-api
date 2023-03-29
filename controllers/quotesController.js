@@ -28,7 +28,6 @@ exports.getAllQuotes = catchAsync(async (req, res, next) => {
 exports.addQuote = catchAsync(async (req, res, next) => {
   const newQuote = await Quote.create({
     user: req.user._id,
-    mood: req.body.mood,
     quoteBody: req.body.quoteBody,
   });
 
@@ -37,5 +36,46 @@ exports.addQuote = catchAsync(async (req, res, next) => {
     data: {
       newQuote,
     },
+  });
+});
+
+exports.updateQuote = catchAsync(async (req, res, next) => {
+  const quote = await Quote.findOne({
+    _id: req.params.quoteId,
+    user: req.user._id,
+  });
+
+  if (!quote) {
+    return next(new AppError("Quote not found or unauthorized to update", 404));
+  }
+
+  quote.quoteBody = req.body.quoteBody || quote.quoteBody;
+  quote.updatedAt = Date.now();
+
+  const updatedQuote = await quote.save();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      quote: updatedQuote,
+    },
+  });
+});
+
+exports.deleteQuote = catchAsync(async (req, res, next) => {
+  const quote = await Quote.findOne({
+    _id: req.params.quoteId,
+    user: req.user._id,
+  });
+
+  if (!quote) {
+    return next(new AppError("Quote not found or unauthorized to update", 404));
+  }
+
+  await quote.deleteOne();
+
+  res.status(204).json({
+    status: "success",
+    data: null,
   });
 });
