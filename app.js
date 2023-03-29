@@ -1,10 +1,12 @@
 const express = require("express");
+const cors = require("cors");
 
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const userRouter = require("./routes/userRoutes");
 
 const app = express();
+const cors = require(cors());
 
 // MIDDLEWARE
 app.use(express.json());
