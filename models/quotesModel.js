@@ -6,11 +6,6 @@ const quoteSchema = new mongoose.Schema({
     ref: "User",
     required: [true, "A quote must belong to a user"],
   },
-  mood: {
-    type: String,
-    trim: true,
-    required: [true, "A quote must have a mood title"],
-  },
   quoteBody: {
     type: String,
     trim: true,
