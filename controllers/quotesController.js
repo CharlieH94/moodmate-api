@@ -26,7 +26,7 @@ exports.getAllQuotes = catchAsync(async (req, res, next) => {
 });
 
 exports.addQuote = catchAsync(async (req, res, next) => {
-  const newQuote = await Quote.create({
+  const quote = await Quote.create({
     user: req.user._id,
     quoteBody: req.body.quoteBody,
   });
@@ -34,7 +34,7 @@ exports.addQuote = catchAsync(async (req, res, next) => {
   res.status(201).json({
     status: "success",
     data: {
-      newQuote,
+      quote,
     },
   });
 });
