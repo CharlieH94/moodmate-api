@@ -50,6 +50,7 @@ exports.updateQuote = catchAsync(async (req, res, next) => {
   }
 
   quote.quoteBody = req.body.quoteBody || quote.quoteBody;
+  quote.author = req.body.author || quote.author;
   quote.updatedAt = Date.now();
 
   const updatedQuote = await quote.save();
