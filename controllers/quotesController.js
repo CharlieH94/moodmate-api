@@ -29,6 +29,7 @@ exports.addQuote = catchAsync(async (req, res, next) => {
   const quote = await Quote.create({
     user: req.user._id,
     quoteBody: req.body.quoteBody,
+    author: req.body.author,
   });
 
   res.status(201).json({
