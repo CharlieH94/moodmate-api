@@ -11,9 +11,16 @@ const quoteSchema = new mongoose.Schema({
     trim: true,
     required: [true, "A quote must have text"],
   },
+  author: {
+    type: String,
+    trim: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
+  },
+  updatedAt: {
+    type: Date,
   },
 });
 
