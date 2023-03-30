@@ -1,6 +1,5 @@
 const AppError = require("../utils/appError");
 const APIFeatures = require("./../utils/apiFeatures");
-const User = require("./../models/userModel");
 const Quote = require("./../models/quotesModel");
 const catchAsync = require("./../utils/catchAsync");
 
@@ -27,7 +26,7 @@ exports.getAllQuotes = catchAsync(async (req, res, next) => {
 
 exports.addQuote = catchAsync(async (req, res, next) => {
   const quote = await Quote.create({
-    // user: req.user._id,
+    user: req.user._id,
     quoteBody: req.body.quoteBody,
     author: req.body.author,
   });
