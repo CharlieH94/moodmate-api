@@ -5,7 +5,7 @@ const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const userRouter = require("./routes/userRoutes");
 const quotesRouter = require("./routes/quoteRoutes");
-const googleVisionRouter = require("./utils/googleApi");
+const googleVisionRouter = require("./routes/googleVisionRoutes");
 
 const app = express();
 app.use(cors());
