@@ -23,3 +23,20 @@ exports.getAllEntries = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.addEntry = catchAsync(async (req, res, next) => {
+  const entry = await Journal.create({
+    user: req.user._id,
+    mood: req.body.mood,
+    overview: req.body.overview,
+    diet: req.body.diet,
+    exercise: req.body.exercise,
+  });
+
+  res.status(201).json({
+    status: "success",
+    data: {
+      entry,
+    },
+  });
+});
