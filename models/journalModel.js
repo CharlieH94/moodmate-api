@@ -17,6 +17,9 @@ const journalSchema = new mongoose.Schema({
   diet: {
     type: String,
   },
+  exercise: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
