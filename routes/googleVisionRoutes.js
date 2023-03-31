@@ -1,6 +1,7 @@
 const express = require("express");
-const router = express.Router();
 const googleVisionController = require("./../controllers/googleVisionController");
+
+const router = express.Router();
 
 router.route("/").get(googleVisionController.googleApiURL);
 
