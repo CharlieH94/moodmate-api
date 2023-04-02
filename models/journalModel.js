@@ -20,6 +20,9 @@ const journalSchema = new mongoose.Schema({
   exercise: {
     type: String,
   },
+  howAreYouFeeling: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now(),

@@ -5,7 +5,10 @@ const catchAsync = require("./../utils/catchAsync");
 
 exports.getAllEntries = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(
-    Journal.find({ user: req.user._id }),
+    Journal.find({
+      // _id: req.params.quoteId,
+      user: req.user._id,
+    }),
     req.query
   )
     .filter()
@@ -31,6 +34,7 @@ exports.addEntry = catchAsync(async (req, res, next) => {
     overview: req.body.overview,
     diet: req.body.diet,
     exercise: req.body.exercise,
+    howAreYouFeeling: req.body.howAreYouFeeling,
   });
 
   res.status(201).json({
@@ -38,5 +42,35 @@ exports.addEntry = catchAsync(async (req, res, next) => {
     data: {
       entry,
     },
+  });
+});
+
+exports.getEntry = catchAsync(async (req, res, next) => {
+  const entry = await Journal.findById(req.params.entryId);
+
+  if (!entry) {
+    return next(new AppError("No entry found", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      entry,
+    },
+  });
+});
+
+exports.deleteEntry = catchAsync(async (req, res, next) => {
+  const entry = await Journal.findByIdAndDelete(req.params.entryId);
+
+  if (!entry) {
+    return next(new AppError("No entry found", 404));
+  }
+
+  await entry.deleteOne();
+
+  res.status(204).json({
+    status: "success",
+    data: null,
   });
 });
