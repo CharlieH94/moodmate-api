@@ -6,7 +6,7 @@ const multer = require("multer");
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "assets");
+    cb(null, "assets/user/profilePhotos");
   },
   filename: (req, file, cb) => {
     const ext = file.mimetype.split("/")[1];
@@ -66,6 +66,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   }
 
   const filteredBody = filterObj(req.body, "firstname", "lastname", "email");
+  if (req.file) filteredBody.profilePhoto = req.file.filename;
 
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
