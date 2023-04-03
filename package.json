@@ -18,10 +18,11 @@
     "mongoose": "^7.0.3",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.1",
+    "sharp": "^0.32.0",
     "validator": "^13.9.0"
   },
   "engines": {
-    "node": "14.x"
+    "node": "19.x"
   },
   "config": {
     "dotenv": {
