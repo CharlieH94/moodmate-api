@@ -10,7 +10,11 @@ router.post("/entries", authController.protect, journalController.addEntry);
 
 router
   .route("/entries/:entryId")
-  .get(authController.protect, journalController.getEntry)
+  // .get(authController.protect, journalController.getEntry)
   .delete(authController.protect, journalController.deleteEntry);
+
+router
+  .route("/entries/:date")
+  .get(authController.protect, journalController.getEntryByDate);
 
 module.exports = router;
