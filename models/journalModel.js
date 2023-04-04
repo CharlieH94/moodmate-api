@@ -21,7 +21,7 @@ const journalSchema = new mongoose.Schema({
     type: String,
   },
   howImFeeling: {
-    type: String,
+    type: Number,
   },
   createdAt: {
     type: Date,
