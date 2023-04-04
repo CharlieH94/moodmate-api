@@ -45,17 +45,32 @@ exports.addEntry = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getEntry = catchAsync(async (req, res, next) => {
-  const entry = await Journal.findById(req.params.entryId);
+exports.getEntriesByDate = catchAsync(async (req, res, next) => {
+  const date = new Date(req.params.date);
+  const startOfDay = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  );
+  const endOfDay = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate() + 1
+  );
 
-  if (!entry) {
-    return next(new AppError("No entry found", 404));
+  const entries = await Journal.find({
+    user: req.user._id,
+    createdAt: { $gte: startOfDay, $lt: endOfDay },
+  });
+
+  if (!entries) {
+    return next(new AppError("No entries found", 404));
   }
 
   res.status(200).json({
     status: "success",
     data: {
-      entry,
+      entries,
     },
   });
 });
