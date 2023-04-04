@@ -34,7 +34,7 @@ exports.addEntry = catchAsync(async (req, res, next) => {
     overview: req.body.overview,
     diet: req.body.diet,
     exercise: req.body.exercise,
-    howAreYouFeeling: req.body.howAreYouFeeling,
+    howImFeeling: req.body.howImFeeling,
   });
 
   res.status(201).json({
