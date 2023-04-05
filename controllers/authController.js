@@ -139,16 +139,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   }
 });
 
-// exports.resetPassword = catchAsync(async (req, res, next) => {
-//   const user = await User.findOne({ email: req.body.email });
-
-//   user.password = req.body.password;
-//   user.passwordConfirm = req.body.passwordConfirm;
-//   await user.save();
-
-//   createSendToken(user, 201, res);
-// });
-
 exports.resetPassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({
     email: req.body.email,
