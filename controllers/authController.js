@@ -142,17 +142,11 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 exports.resetPassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({
     email: req.body.email,
-    passwordResetCode: req.body.passwordResetCode,
     passwordResetExpires: { $gt: Date.now() },
   });
 
   if (!user) {
     return next(new AppError("Invalid or expired password reset code.", 400));
-  }
-
-  // Compare the reset code entered by the user with the passwordResetCode field of the user object
-  if (req.body.resetCode !== user.passwordResetCode) {
-    return next(new AppError("Invalid password reset code.", 400));
   }
 
   user.password = req.body.password;
