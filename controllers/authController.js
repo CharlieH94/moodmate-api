@@ -150,6 +150,11 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     return next(new AppError("Invalid or expired password reset code.", 400));
   }
 
+  // Compare the reset code entered by the user with the passwordResetCode field of the user object
+  if (req.body.resetCode !== user.passwordResetCode) {
+    return next(new AppError("Invalid password reset code.", 400));
+  }
+
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;
   user.passwordResetCode = undefined;
